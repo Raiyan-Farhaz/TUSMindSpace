@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.tusmindspace.screens.HomeScreen
 import com.example.tusmindspace.screens.MoodScreen
 import com.example.tusmindspace.screens.JournalScreen
+import com.example.tusmindspace.screens.MeditationScreen
+import com.example.tusmindspace.screens.WellbeingResourcesScreen
 
 // Import our app theme
 import com.example.tusmindspace.ui.theme.TUSMindSpaceTheme
@@ -57,8 +59,12 @@ fun TUSMindSpaceApp() {
                 onJournalClick = {
                     navController.navigate("journal")
                 },
-                // Meditation will be added later
-                onMeditationClick = {}
+                onMeditationClick = {
+                    navController.navigate("med")
+                },
+                onResourcesClick = {
+                    navController.navigate("resources")
+                }
             )
         }
 
@@ -71,7 +77,7 @@ fun TUSMindSpaceApp() {
             )
         }
 
-        // Journal screen
+        // Personal Journal screen
         composable("journal") {
             JournalScreen(
                 onBackClick = {
@@ -79,5 +85,24 @@ fun TUSMindSpaceApp() {
                 }
             )
         }
+
+        // Guided Meditation screen
+        composable("med") {
+            MeditationScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // Wellbeing Resources screen
+        composable("resources") {
+            WellbeingResourcesScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
+

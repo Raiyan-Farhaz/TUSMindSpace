@@ -1,3 +1,4 @@
+
 package com.example.tusmindspace.screens
 
 import androidx.compose.foundation.layout.*
@@ -11,7 +12,8 @@ import androidx.compose.ui.unit.dp
 fun HomeScreen(
     onMoodClick: () -> Unit,
     onJournalClick: () -> Unit,
-    onMeditationClick: () -> Unit
+    onMeditationClick: () -> Unit,
+    onResourcesClick: () -> Unit
 ) {
 
     // Column arranges items vertically
@@ -25,7 +27,6 @@ fun HomeScreen(
             style = MaterialTheme.typography.headlineMedium
         )
 
-        // Space below the title
         Spacer(modifier = Modifier.height(24.dp))
 
         // Button 1 - Mood Tracker
@@ -41,6 +42,11 @@ fun HomeScreen(
         // Button 3 - Meditation
         Button(onClick = onMeditationClick) {
             Text("Guided Meditation")
+        }
+
+        // Button 4 - Wellbeing Resources
+        Button(onClick = onResourcesClick) {
+            Text("Wellbeing Resources")
         }
     }
 }
