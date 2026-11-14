@@ -9,12 +9,12 @@ import androidx.compose.ui.unit.dp
 
 // This function creates the Mood Tracker screen
 @Composable
-fun MoodScreen(onBackClick: () -> Unit) {
+fun MoodScreen(
+    onBackClick: () -> Unit,
+    onHistoryClick: () -> Unit // NEW: Opens Mood History
+) {
 
-    // Arrange everything vertically
-    Column(
-        modifier = Modifier.padding(24.dp)
-    ) {
+    Column(modifier = Modifier.padding(24.dp)) {
 
         // Screen heading
         Text(
@@ -22,19 +22,22 @@ fun MoodScreen(onBackClick: () -> Unit) {
             style = MaterialTheme.typography.headlineMedium
         )
 
-        // Add space
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Description
         Text("How are you feeling today?")
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Back button
+        // NEW: Button to open Mood History
+        Button(onClick = onHistoryClick) {
+            Text("View Mood History")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Existing Back button
         Button(onClick = onBackClick) {
             Text("Back to Home")
         }
     }
 }
-
-

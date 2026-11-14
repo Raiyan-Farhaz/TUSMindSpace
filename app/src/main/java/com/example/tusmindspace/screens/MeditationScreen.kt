@@ -9,13 +9,13 @@ import androidx.compose.ui.unit.dp
 
 // This function creates the Meditation screen
 @Composable
-fun MeditationScreen(onBackClick: () -> Unit) {
+fun MeditationScreen(
+    onBackClick: () -> Unit,
+    onHistoryClick: () -> Unit // NEW: Opens Meditation History
+) {
 
-    Column(
-        modifier = Modifier.padding(24.dp)
-    ) {
+    Column(modifier = Modifier.padding(24.dp)) {
 
-        // Screen title
         Text(
             text = "Guided Meditation",
             style = MaterialTheme.typography.headlineMedium
@@ -23,12 +23,11 @@ fun MeditationScreen(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Description
         Text("Take a short break and relax with a guided exercise.")
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Meditation options (UI placeholders)
+        // Existing meditation options
         Text("Breathing Exercise (5 mins)")
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -41,11 +40,16 @@ fun MeditationScreen(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Back button
+        // NEW: Opens Meditation History
+        Button(onClick = onHistoryClick) {
+            Text("View Meditation History")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Existing Back button
         Button(onClick = onBackClick) {
             Text("Back to Home")
         }
     }
 }
-
-

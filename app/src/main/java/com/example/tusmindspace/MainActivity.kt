@@ -18,9 +18,12 @@ import com.example.tusmindspace.screens.JournalScreen
 import com.example.tusmindspace.screens.MeditationScreen
 import com.example.tusmindspace.screens.WellbeingResourcesScreen
 
-// Import our app theme
-import com.example.tusmindspace.ui.theme.TUSMindSpaceTheme
+// NEW: Import history screens
+import com.example.tusmindspace.screens.MoodHistoryScreen
+import com.example.tusmindspace.screens.MeditationHistoryScreen
 
+// App theme
+import com.example.tusmindspace.ui.theme.TUSMindSpaceTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -36,15 +39,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 // This function manages navigation between screens
 @Composable
 fun TUSMindSpaceApp() {
 
-    // Create a navigation controller
+    // Create navigation controller
     val navController = rememberNavController()
 
-    // Define all the screens and their routes
+    // Define all screens and their routes
     NavHost(
         navController = navController,
         startDestination = "home"
@@ -73,6 +75,20 @@ fun TUSMindSpaceApp() {
             MoodScreen(
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onHistoryClick = {
+                    // NEW: Open Mood History
+                    navController.navigate("mood_history")
+                }
+            )
+        }
+
+        // NEW: Mood History screen
+        composable("mood_history") {
+            MoodHistoryScreen(
+                onBackClick = {
+                    // Go back to Mood Tracker
+                    navController.popBackStack()
                 }
             )
         }
@@ -91,6 +107,20 @@ fun TUSMindSpaceApp() {
             MeditationScreen(
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onHistoryClick = {
+                    // NEW: Open Meditation History
+                    navController.navigate("meditation_history")
+                }
+            )
+        }
+
+        // NEW: Meditation History screen
+        composable("meditation_history") {
+            MeditationHistoryScreen(
+                onBackClick = {
+                    // Go back to Guided Meditation
+                    navController.popBackStack()
                 }
             )
         }
@@ -105,4 +135,3 @@ fun TUSMindSpaceApp() {
         }
     }
 }
-
