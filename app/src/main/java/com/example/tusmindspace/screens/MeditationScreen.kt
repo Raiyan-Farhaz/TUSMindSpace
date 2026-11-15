@@ -1,15 +1,18 @@
 
 package com.example.tusmindspace.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.tusmindspace.R
 
 @Composable
 fun MeditationScreen(
@@ -21,6 +24,7 @@ fun MeditationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -33,10 +37,11 @@ fun MeditationScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Simple icon
-        Text(
-            text = "♧",
-            style = MaterialTheme.typography.displayMedium
+        // Display the image from drawable
+        Image(
+            painter = painterResource(id = R.drawable.guided_meditation),
+            contentDescription = "Guided Meditation",
+            modifier = Modifier.size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
