@@ -2,54 +2,115 @@
 package com.example.tusmindspace.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-// This function creates the Meditation screen
 @Composable
 fun MeditationScreen(
     onBackClick: () -> Unit,
-    onHistoryClick: () -> Unit // NEW: Opens Meditation History
+    onHistoryClick: () -> Unit
 ) {
 
-    Column(modifier = Modifier.padding(24.dp)) {
+    // Arrange everything vertically
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
+        // Screen title
         Text(
             text = "Guided Meditation",
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Take a short break and relax with a guided exercise.")
+        // Simple icon
+        Text(
+            text = "♧",
+            style = MaterialTheme.typography.displayMedium
+        )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-        // Existing meditation options
-        Text("Breathing Exercise (5 mins)")
+        // Description
+        Text("Take a short break and relax with a guided exercise")
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // First exercise card
+        MeditationCard("Breathing Exercise", "5 mins")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Relaxation (10 mins)")
+        // Second exercise card
+        MeditationCard("Relaxation", "10 mins")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Stress Relief (10 mins)")
+        // Third exercise card
+        MeditationCard("Stress Relief", "10 mins")
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
-        // NEW: Opens Meditation History
+        // Open Meditation History
         Button(onClick = onHistoryClick) {
             Text("View Meditation History")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-        // Existing Back button
+        // Return to Home
         Button(onClick = onBackClick) {
             Text("Back to Home")
         }
+    }
+}
+
+// Reusable card for meditation exercises
+@Composable
+fun MeditationCard(
+    name: String,
+    duration: String
+) {
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                Color.LightGray,
+                RoundedCornerShape(10.dp)
+            )
+            .padding(18.dp),
+
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        // Play symbol
+        Text("▶")
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        // Exercise name
+        Text(
+            text = name,
+            modifier = Modifier.weight(1f)
+        )
+
+        // Duration
+        Text(duration)
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        // Arrow
+        Text("→")
     }
 }
