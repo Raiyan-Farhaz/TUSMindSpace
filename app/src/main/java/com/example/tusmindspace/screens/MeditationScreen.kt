@@ -3,6 +3,7 @@ package com.example.tusmindspace.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tusmindspace.R
 
 @Composable
@@ -20,7 +22,6 @@ fun MeditationScreen(
     onHistoryClick: () -> Unit
 ) {
 
-    // Arrange everything vertically
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,17 +30,37 @@ fun MeditationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        // Screen title
-        Text(
-            text = "Guided Meditation",
-            style = MaterialTheme.typography.headlineMedium
-        )
+        // NEW: Back arrow and screen title
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            // Click arrow to return to Home
+            Text(
+                text = "←",
+                fontSize = 26.sp,
+                color = Color.Black,
+                modifier = Modifier.clickable {
+                    onBackClick()
+                }
+            )
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+            Text(
+                text = "Guided Meditation",
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Display the image from drawable
+        // Display meditation image
         Image(
-            painter = painterResource(id = R.drawable.guided_meditation),
+            painter = painterResource(
+                id = R.drawable.guided_meditation
+            ),
             contentDescription = "Guided Meditation",
             modifier = Modifier.size(100.dp)
         )
@@ -47,7 +68,9 @@ fun MeditationScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         // Description
-        Text("Take a short break and relax with a guided exercise")
+        Text(
+            "Take a short break and relax with a guided exercise"
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 

@@ -20,7 +20,7 @@ class MoodViewModel(
     // Save the mood selected by the student
     fun saveMood(selectedMood: String) {
 
-        // Run database operation in a coroutine
+        // Run database operation
         viewModelScope.launch {
 
             // Create a new mood record
