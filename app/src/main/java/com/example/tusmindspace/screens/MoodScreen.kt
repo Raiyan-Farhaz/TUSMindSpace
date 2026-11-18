@@ -16,16 +16,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tusmindspace.R
+import com.example.tusmindspace.viewmodel.MoodViewModel
 
 // This function creates the Mood Tracker screen
 @Composable
 fun MoodScreen(
     onBackClick: () -> Unit,
-    onHistoryClick: () -> Unit
+    onHistoryClick: () -> Unit,
+    moodViewModel: MoodViewModel
 ) {
 
     // Temporarily remembers the selected mood
     var selectedMood by remember { mutableStateOf("") }
+
+    // Shows confirmation after clicking Save Mood
+    var saveMessage by remember { mutableStateOf("") }
 
     // Column arranges everything vertically
     Column(
@@ -81,14 +86,20 @@ fun MoodScreen(
                 mood = "Happy",
                 imageId = R.drawable.happy,
                 selectedMood = selectedMood,
-                onClick = { selectedMood = "Happy" }
+                onClick = {
+                    selectedMood = "Happy"
+                    saveMessage = ""
+                }
             )
 
             MoodCard(
                 mood = "Okay",
                 imageId = R.drawable.okay,
                 selectedMood = selectedMood,
-                onClick = { selectedMood = "Okay" }
+                onClick = {
+                    selectedMood = "Okay"
+                    saveMessage = ""
+                }
             )
         }
 
@@ -104,14 +115,20 @@ fun MoodScreen(
                 mood = "Sad",
                 imageId = R.drawable.sad,
                 selectedMood = selectedMood,
-                onClick = { selectedMood = "Sad" }
+                onClick = {
+                    selectedMood = "Sad"
+                    saveMessage = ""
+                }
             )
 
             MoodCard(
                 mood = "Stressed",
                 imageId = R.drawable.stressed,
                 selectedMood = selectedMood,
-                onClick = { selectedMood = "Stressed" }
+                onClick = {
+                    selectedMood = "Stressed"
+                    saveMessage = ""
+                }
             )
         }
 
@@ -122,15 +139,26 @@ fun MoodScreen(
             mood = "Very Happy",
             imageId = R.drawable.very_happy,
             selectedMood = selectedMood,
-            onClick = { selectedMood = "Very Happy" }
+            onClick = {
+                selectedMood = "Very Happy"
+                saveMessage = ""
+            }
         )
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        // Save Mood button - placeholder until Room is added
+        // Save selected mood into Room Database
         Button(
             onClick = {
-                // Later: Save selectedMood using Room database
+
+                // Call ViewModel to save the selected mood
+                moodViewModel.saveMood(selectedMood)
+
+                // Display confirmation message
+                saveMessage = "Mood submitted for saving!"
+
+                // Clear selected mood
+                selectedMood = ""
             },
             enabled = selectedMood.isNotEmpty(),
             modifier = Modifier.fillMaxWidth(0.75f),
@@ -143,6 +171,17 @@ fun MoodScreen(
             shape = RoundedCornerShape(4.dp)
         ) {
             Text("Save Mood")
+        }
+
+        // Show confirmation message
+        if (saveMessage.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = saveMessage,
+                fontSize = 13.sp,
+                color = Color.DarkGray
+            )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -184,7 +223,9 @@ fun MoodCard(
                     Color(0xFFD9D9D9),
                 shape = RoundedCornerShape(4.dp)
             )
-            .clickable { onClick() }
+            .clickable {
+                onClick()
+            }
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
