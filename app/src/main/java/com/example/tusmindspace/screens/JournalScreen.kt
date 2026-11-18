@@ -68,7 +68,7 @@ fun JournalScreen(onBackClick: () -> Unit) {
 
         // Journal prompt box
 
-        // Journal prompt box
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()

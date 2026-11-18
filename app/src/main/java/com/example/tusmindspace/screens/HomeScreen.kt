@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.example.tusmindspace.R
-// This function creates our Home screen
+// This function creates Home screen
 @Composable
 fun HomeScreen(
     onMoodClick: () -> Unit,

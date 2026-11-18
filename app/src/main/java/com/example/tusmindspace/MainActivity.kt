@@ -11,14 +11,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-// Import our screens
+// Import screens
 import com.example.tusmindspace.screens.HomeScreen
 import com.example.tusmindspace.screens.MoodScreen
 import com.example.tusmindspace.screens.JournalScreen
 import com.example.tusmindspace.screens.MeditationScreen
 import com.example.tusmindspace.screens.WellbeingResourcesScreen
 
-// NEW: Import history screens
+// Import history screens
 import com.example.tusmindspace.screens.MoodHistoryScreen
 import com.example.tusmindspace.screens.MeditationHistoryScreen
 
@@ -83,7 +83,7 @@ fun TUSMindSpaceApp() {
             )
         }
 
-        // NEW: Mood History screen
+        //  Mood History screen
         composable("mood_history") {
             MoodHistoryScreen(
                 onBackClick = {
