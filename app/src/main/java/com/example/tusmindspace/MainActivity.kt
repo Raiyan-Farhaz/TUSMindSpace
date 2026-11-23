@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tusmindspace.viewmodel.MoodViewModel
+import com.example.tusmindspace.viewmodel.JournalViewModel
 
 // Import screens
 import com.example.tusmindspace.screens.HomeScreen
@@ -32,6 +33,7 @@ import com.example.tusmindspace.screens.WellbeingResourcesScreen
 
 // Import history screens
 import com.example.tusmindspace.screens.MoodHistoryScreen
+import com.example.tusmindspace.screens.JournalHistoryScreen
 import com.example.tusmindspace.screens.MeditationHistoryScreen
 
 // App theme
@@ -64,7 +66,10 @@ fun TUSMindSpaceApp() {
             context,
             AppDatabase::class.java,
             "tusmindspace_database"
-        ).build()
+        )
+            // Allow database recreation when version changes
+            .fallbackToDestructiveMigration(true)
+            .build()
     }
 
     // Create MoodViewModel and connect it to MoodDao
@@ -76,6 +81,19 @@ fun TUSMindSpaceApp() {
                 modelClass: Class<T>
             ): T {
                 return MoodViewModel(database.moodDao()) as T
+            }
+        }
+    )
+
+    // Create JournalViewModel and connect it to JournalDao
+    val journalViewModel: JournalViewModel = viewModel(
+        factory = object : ViewModelProvider.Factory {
+
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>
+            ): T {
+                return JournalViewModel(database.journalDao()) as T
             }
         }
     )
@@ -137,7 +155,23 @@ fun TUSMindSpaceApp() {
             JournalScreen(
                 onBackClick = {
                     navController.popBackStack()
-                }
+                },
+                onHistoryClick = {
+                    // Open Journal History
+                    navController.navigate("journal_history")
+                },
+                journalViewModel = journalViewModel
+            )
+        }
+
+        // Journal History screen
+        composable("journal_history") {
+            JournalHistoryScreen(
+                onBackClick = {
+                    // Go back to Personal Journal
+                    navController.popBackStack()
+                },
+                journalViewModel = journalViewModel
             )
         }
 

@@ -1,6 +1,8 @@
 
 package com.example.tusmindspace.screens
 
+import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,14 +12,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
 import com.example.tusmindspace.R
-
-// Import JournalViewModel for Room Database
 import com.example.tusmindspace.viewmodel.JournalViewModel
 
 // This function creates the Personal Journal screen
@@ -30,6 +30,9 @@ fun JournalScreen(
 
     // Temporarily stores what the user types
     var journalText by remember { mutableStateOf("") }
+
+    // Get context to display Toast messages
+    val context = LocalContext.current
 
     // Column arranges everything vertically
     Column(
@@ -48,6 +51,7 @@ fun JournalScreen(
             Text(
                 text = "←",
                 fontSize = 26.sp,
+                color = Color.Black,
                 modifier = Modifier.clickable {
                     onBackClick()
                 }
@@ -118,7 +122,9 @@ fun JournalScreen(
         // Large journal writing box
         OutlinedTextField(
             value = journalText,
-            onValueChange = { journalText = it },
+            onValueChange = {
+                journalText = it
+            },
             placeholder = {
                 Text(
                     text = "Start writing here...",
@@ -137,18 +143,34 @@ fun JournalScreen(
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        // Save Entry button - now connected to Room Database
+        // Save Entry button - connected to Room Database
         Button(
             onClick = {
 
-                // Only save if the student has written something
+                // Check if the student has written something
                 if (journalText.isNotBlank()) {
 
-                    // Save journal text using JournalViewModel
+                    // Request saving journal text using ViewModel
                     journalViewModel.saveJournal(journalText)
 
-                    // Clear writing box after requesting save
+                    // Display confirmation message
+                    Toast.makeText(
+                        context,
+                        "Journal entry saved!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Clear the writing box
                     journalText = ""
+
+                } else {
+
+                    // Display message if writing box is empty
+                    Toast.makeText(
+                        context,
+                        "Please write something first!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
             modifier = Modifier
