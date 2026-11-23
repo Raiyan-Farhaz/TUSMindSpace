@@ -16,9 +16,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.example.tusmindspace.R
+
+// Import JournalViewModel for Room Database
+import com.example.tusmindspace.viewmodel.JournalViewModel
+
 // This function creates the Personal Journal screen
 @Composable
-fun JournalScreen(onBackClick: () -> Unit) {
+fun JournalScreen(
+    onBackClick: () -> Unit,
+    onHistoryClick: () -> Unit,
+    journalViewModel: JournalViewModel
+) {
 
     // Temporarily stores what the user types
     var journalText by remember { mutableStateOf("") }
@@ -67,8 +75,6 @@ fun JournalScreen(onBackClick: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
 
         // Journal prompt box
-
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -107,6 +113,7 @@ fun JournalScreen(onBackClick: () -> Unit) {
             }
         }
 
+        Spacer(modifier = Modifier.height(24.dp))
 
         // Large journal writing box
         OutlinedTextField(
@@ -130,10 +137,19 @@ fun JournalScreen(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        // Save Entry button - placeholder for now
+        // Save Entry button - now connected to Room Database
         Button(
             onClick = {
-                // Later: Save journalText using Room
+
+                // Only save if the student has written something
+                if (journalText.isNotBlank()) {
+
+                    // Save journal text using JournalViewModel
+                    journalViewModel.saveJournal(journalText)
+
+                    // Clear writing box after requesting save
+                    journalText = ""
+                }
             },
             modifier = Modifier
                 .fillMaxWidth(0.75f)
@@ -149,10 +165,12 @@ fun JournalScreen(onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // View Journal History - placeholder for now
+        // View Journal History button
         Button(
             onClick = {
-                // Later: Navigate to JournalHistoryScreen
+
+                // Navigate to Journal History screen
+                onHistoryClick()
             },
             modifier = Modifier
                 .fillMaxWidth(0.75f)
